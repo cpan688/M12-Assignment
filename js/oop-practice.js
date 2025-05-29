@@ -134,3 +134,19 @@
     It should then alert out to the user the number of time that word was found in the paragraph.
     Remember, you’ll need to add your method to the String object’s prototype. */
 
+// class MyString extends String {
+//     findWords(word, str) {
+//         str = str.replace(/[.,!?;:]/g, '')          // REMOVE PUNCTUATIONS
+//         let arrWord = str.trim().split(' ');        // TRIM SPACES AND BREAK INTO WORDS
+//         // console.log(`array of words: ${arrWord}`)
+//         let count = 0;
+//         for (let i=0; i < arrWord.length; i++) {
+//             if (word.toLowerCase() == arrWord[i].toLowerCase()) { count++; }
+//         }
+//         return console.log(`The number of time '${word}' was found in the paragraph: ${count}`)
+//     }
+// }
+
+// str = 'Albums were added manually in code, albums were added to the player manually in code, and the albums were also played manually in code.';
+// const test = new MyString();
+// test.findWords('albums', str);
