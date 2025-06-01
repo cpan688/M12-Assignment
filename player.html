@@ -12,25 +12,38 @@
     <h1>The Music Player</h1>
     
     <!-- ADD DROP DOWN MENU -->
-    <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="dropdown mb-3">
+        <button class="btn btn-primary dropdown-toggle" 
+        type="button"
+        id="dropdownMenuButton"
+        data-bs-toggle="dropdown"
+        aria-expanded="false">
         Select Artist/Album to Play
-        </button>
-        <ul class="dropdown-menu" id="albumDropdown">
-        <!-- Insert Menu items here from JavaScript -->
-        </ul>
+    </button>
+    <ul class="dropdown-menu" id="albumDropdown">
+        <!-- MENU ITEMS WILL BE FILLED BY JavaScript -->
+    </ul>
+    </div>
+
+    <div class="mt-3">
+        <strong>Selected Album:</strong>
+        <span id="selectedAlbum">None</span>
     </div>
 
     <!-- ADD PLAY BUTTON -->
     <div class="p-5">
-        <button>Play</button>
+        <button class="btn btn-success mb-3" id="playButton">Play</button>
     </div>     
+     <p><strong>Status:</strong> <span id="playStatus">Select another album...</span></p>
 
     <!-- ADD SHOW FAVORITE ALBUM BUTTON -->
-    <div class="p-5">
-        <button>Show My Favorite Album</button>
-    </div>     
+    <button class="btn btn-info mb-3" id="favoriteButton">Show My Favorite Album</button>
+    <p><strong>Favorite Album:</strong> <span id="favoriteAlbum">None</span></p>    
 
-    <p id="favoriteAlbum"></p>
+    <!-- ADD RESET BUTTON -->
+    <div>
+        <button class="btn btn-secondary mb-3" id="resetButton">Reset</button>
+    </div>
+
 </body>
 </html>

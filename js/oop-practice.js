@@ -143,7 +143,7 @@
 //         for (let i=0; i < arrWord.length; i++) {
 //             if (word.toLowerCase() == arrWord[i].toLowerCase()) { count++; }
 //         }
-//         return console.log(`The number of time '${word}' was found in the paragraph: ${count}`)
+//         return console.log(`The number of times '${word}' was found in the paragraph: ${count}`)
 //     }
 // }
 

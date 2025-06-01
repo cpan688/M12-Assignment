@@ -6,7 +6,7 @@ class Jukebox {
         this.albums.push(album)
     }
     favoriteAlbum = function() {
-        let max = -1, fav
+        let max = -1, fav;
         for (let i = 0; i < this.albums.length; i++) {
             if (this.albums[i].played > max) {
                 max = this.albums[i].played
@@ -15,7 +15,15 @@ class Jukebox {
         }
         return fav.display()
     }
-}
+    getAlbumByKey =  function(selectedKey) {
+        let pos = selectedKey.indexOf('-');
+        let artist = selectedKey.slice(0,pos-1);
+        let record = selectedKey.slice(pos+1);   
+        console.log(`Selected Artist: ${artist}   Album: ${record}` )
+        return (artist, record);
+//        const album = new Album(artist, record);
+//        return album;
+}}
 
 class Album {
     constructor(artist, title) {
@@ -24,28 +32,76 @@ class Album {
         this.played = 0
     }
     play = function() {
-        this.played += 1
+        this.played++;
     }
     display = function() {
         return `${this.artist} : ${this.title}. The album has been played ${this.played} times.`
     }
 }
 
-var jbox = new Jukebox()
-const album1 = new Album('Operation Ivy', 'Energy')
-const album2 = new Album('Blink 182', 'Dude Ranch')
-const album3 = new Album('New Found Glory', 'Sticks and Stones')
+const albums = [
+    { artist: 'The Beatles', album: 'Abbey Road' },
+    { artist: 'Pink Floyd', album: 'The Dark Side of the Moon' },
+    { artist: 'Bruce Springsteen', album: 'Born to Run' },
+    { artist: 'Nirvana', album: 'Never Mind' },
+    { artist: 'Fleetwood Mac', album: 'Rumours' },
+];
 
-jbox.addAlbum(album1)
-jbox.addAlbum(album2)
-jbox.addAlbum(album3)
+const jukebox = new Jukebox()
 
-album1.play()
-album2.play()
-album2.play()
-album2.play()
-album2.play()
-album2.play()
-album3.play()
+const dropdown = document.getElementById('albumDropdown');
+const dropdownButton = document.getElementById('dropdownMenuButton');
+const selectedAlbumSpan = document.getElementById('selectedAlbum');
 
-console.log(`Your favorite album is: ${jbox.favoriteAlbum()}`)
+const playButton = document.getElementById('playButton');
+const playStatusSpan = document.getElementById('playStatus');
+
+const favoriteButton = document.getElementById('favoriteButton');
+const favoriteAlbumSpan = document.getElementById('favoriteAlbum');
+
+albums.forEach(item => {
+    const album = new Album(item.artist, item.album);
+    jukebox.addAlbum(album);
+
+    const li = document.createElement('li');
+    li.innerHTML = `<a class="dropdown-item" href="#" data-key="${item.artist} - ${item.album}">
+                        ${item.artist} - ${item.album}
+                    </a>`;
+    dropdown.appendChild(li);
+});
+
+// Handle album selection
+dropdown.addEventListener('click', (e) => {
+if (e.target.matches('.dropdown-item')) {
+    e.preventDefault();
+    selectedKey = e.target.getAttribute('data-key');
+    dropdownButton.textContent = selectedKey;
+    selectedAlbumSpan.textContent = selectedKey;
+    playStatusSpan.textContent = 'Ready to play';
+}
+});
+
+// Handle Play button
+playButton.addEventListener('click', () => {
+    if (!selectedKey) {
+        playStatusSpan.textContent = 'Please select an album first.';
+        return;
+    }
+    const album = jukebox.getAlbumByKey(selectedKey);
+    album.play();
+    // playStatusSpan.textContent = `Now Playing: ${album.display()}`;
+    playStatusSpan.textContent = `Now Playing: ${selectedKey}`;
+});
+
+favoriteButton.addEventListener('click', () => {
+  favoriteAlbumSpan.textContent = jukebox.favoriteAlbum();
+});
+
+// Handle Reset button
+resetButton.addEventListener('click', () => {
+    dropdownButton.textContent = 'Select Artist/Album to Play';
+    selectedAlbumSpan.textContent = 'None';
+    playStatusSpan.textContent = 'Select an album to play...';
+    favoriteAlbumSpan.textContent = 'None';
+    li.remove();
+});
