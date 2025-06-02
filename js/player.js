@@ -1,3 +1,4 @@
+let selectedKey = null;
 class Jukebox {
     constructor(albums) {
         this.albums = []
@@ -17,12 +18,13 @@ class Jukebox {
     }
     getAlbumByKey =  function(selectedKey) {
         let pos = selectedKey.indexOf('-');
-        let artist = selectedKey.slice(0,pos-1);
-        let record = selectedKey.slice(pos+1);   
-        console.log(`Selected Artist: ${artist}   Album: ${record}` )
-        return (artist, record);
-//        const album = new Album(artist, record);
-//        return album;
+        let artist = selectedKey.slice(0, pos).trim();
+        let title = selectedKey.slice(pos + 1).trim();   
+        // console.log(`Selected Artist: ${artist} Album: ${title}` )
+        let album = this.albums.find(album => album.artist === artist 
+            && album.title === title);
+        // console.log(`Inside getAlbumByKey, album object: ${album}`);
+        return album;
 }}
 
 class Album {
@@ -35,7 +37,7 @@ class Album {
         this.played++;
     }
     display = function() {
-        return `${this.artist} : ${this.title}. The album has been played ${this.played} times.`
+        return `${this.artist} : ${this.title}.<br>The album has been played ${this.played} times.`
     }
 }
 
@@ -93,8 +95,10 @@ playButton.addEventListener('click', () => {
     playStatusSpan.textContent = `Now Playing: ${selectedKey}`;
 });
 
+// Handle Show Favorite Album button
 favoriteButton.addEventListener('click', () => {
-  favoriteAlbumSpan.textContent = jukebox.favoriteAlbum();
+    favoriteAlbumSpan.innerHTML = jukebox.favoriteAlbum();
+//   favoriteAlbumSpan.textContent = jukebox.favoriteAlbum();
 });
 
 // Handle Reset button
@@ -103,5 +107,5 @@ resetButton.addEventListener('click', () => {
     selectedAlbumSpan.textContent = 'None';
     playStatusSpan.textContent = 'Select an album to play...';
     favoriteAlbumSpan.textContent = 'None';
-    li.remove();
+    // li.remove();
 });
